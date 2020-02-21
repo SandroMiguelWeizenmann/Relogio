@@ -1,0 +1,664 @@
+
+
+Microchip MPLAB XC8 Assembler V2.05 build -831301201 
+                                                                                               Mon Apr 15 10:40:39 2019
+
+Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1 
+     1                           	processor	18F4520
+     2                           	fnconf	rparam,??,?,0
+     3                           	opt	pw 120
+     4                           	opt	flic
+     5                           	psect	cinit,global,reloc=2,class=CODE,delta=1
+     6                           	psect	bssCOMRAM,global,class=COMRAM,space=1,delta=1,noexec
+     7                           	psect	cstackCOMRAM,global,class=COMRAM,space=1,delta=1,noexec
+     8                           	psect	text0,global,reloc=2,class=CODE,delta=1
+     9                           	psect	intcode,global,reloc=2,class=CODE,delta=1
+    10                           	psect	intcode_body,global,reloc=2,class=CODE,delta=1
+    11                           	psect	intsave_regs,global,class=BIGRAM,space=1,delta=1,noexec
+    12                           	psect	rparam,global,class=COMRAM,space=1,delta=1,noexec
+    13                           	psect	temp,global,ovrld,common,class=COMRAM,space=1,delta=1
+    14  0000                     
+    15                           ; Version 2.05
+    16                           ; Generated 20/12/2018 GMT
+    17                           ; 
+    18                           ; Copyright © 2018, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    19                           ; All rights reserved.
+    20                           ; 
+    21                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    22                           ; 
+    23                           ; Redistribution and use in source and binary forms, with or without modification, are
+    24                           ; permitted provided that the following conditions are met:
+    25                           ; 
+    26                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    27                           ;        conditions and the following disclaimer.
+    28                           ; 
+    29                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    30                           ;        of conditions and the following disclaimer in the documentation and/or other
+    31                           ;        materials provided with the distribution.
+    32                           ; 
+    33                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    34                           ;        software without specific prior written permission.
+    35                           ; 
+    36                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    37                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    38                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    39                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    40                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    41                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    42                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    43                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    44                           ; 
+    45                           ; 
+    46                           ; Code-generator required, PIC18F4520 Definitions
+    47                           ; 
+    48                           ; SFR Addresses
+    49  0000                     _PORTDbits	set	3971
+    50  0000                     _PORTD	set	3971
+    51  0000                     _PORTB	set	3969
+    52  0000                     _T0CON	set	4053
+    53  0000                     _TRISB	set	3987
+    54  0000                     _TRISD	set	3989
+    55  0000                     _INTCONbits	set	4082
+    56  0000                     _TMR0L	set	4054
+    57  0000                     _TMR0H	set	4055
+    58                           
+    59                           ; #config settings
+    60                           
+    61                           	psect	cinit
+    62  000132                     __pcinit:
+    63                           	opt callstack 0
+    64  000132                     start_initialization:
+    65                           	opt callstack 0
+    66  000132                     __initialization:
+    67                           	opt callstack 0
+    68                           
+    69                           ; Clear objects allocated to COMRAM (1 bytes)
+    70  000132  6A0F               	clrf	__pbssCOMRAM& (0+255),c
+    71  000134                     end_of_initialization:
+    72                           	opt callstack 0
+    73  000134                     __end_of__initialization:
+    74                           	opt callstack 0
+    75  000134  9010               	bcf	int$flags,0,c	;clear compiler interrupt flag (level 1)
+    76  000136  9210               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
+    77  000138  0100               	movlb	0
+    78  00013A  EF09  F000         	goto	_main	;jump to C main() function
+    79                           
+    80                           	psect	bssCOMRAM
+    81  00000F                     __pbssCOMRAM:
+    82                           	opt callstack 0
+    83  00000F                     _su:
+    84                           	opt callstack 0
+    85  00000F                     	ds	1
+    86                           
+    87                           	psect	cstackCOMRAM
+    88  000001                     __pcstackCOMRAM:
+    89                           	opt callstack 0
+    90  000001                     ??_main:
+    91                           
+    92                           ; 1 bytes @ 0x0
+    93  000001                     	ds	1
+    94  000002                     main@numeros:
+    95                           	opt callstack 0
+    96                           
+    97                           ; 10 bytes @ 0x1
+    98  000002                     	ds	10
+    99  00000C                     main@sd:
+   100                           	opt callstack 0
+   101                           
+   102                           ; 1 bytes @ 0xB
+   103  00000C                     	ds	1
+   104  00000D                     main@mu:
+   105                           	opt callstack 0
+   106                           
+   107                           ; 1 bytes @ 0xC
+   108  00000D                     	ds	1
+   109  00000E                     main@md:
+   110                           	opt callstack 0
+   111                           
+   112                           ; 1 bytes @ 0xD
+   113  00000E                     	ds	1
+   114                           
+   115 ;;
+   116 ;;Main: autosize = 0, tempsize = 1, incstack = 0, save=0
+   117 ;;
+   118 ;; *************** function _main *****************
+   119 ;; Defined at:
+   120 ;;		line 23 in file "relogio.c"
+   121 ;; Parameters:    Size  Location     Type
+   122 ;;		None
+   123 ;; Auto vars:     Size  Location     Type
+   124 ;;  numeros        10    1[COMRAM] unsigned char [10]
+   125 ;;  md              1   13[COMRAM] unsigned char 
+   126 ;;  mu              1   12[COMRAM] unsigned char 
+   127 ;;  sd              1   11[COMRAM] unsigned char 
+   128 ;; Return value:  Size  Location     Type
+   129 ;;                  1    wreg      void 
+   130 ;; Registers used:
+   131 ;;		wreg, fsr2l, fsr2h, status,2, status,0
+   132 ;; Tracked objects:
+   133 ;;		On entry : 0/0
+   134 ;;		On exit  : 0/0
+   135 ;;		Unchanged: 0/0
+   136 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   137 ;;      Params:         0       0       0       0       0       0       0
+   138 ;;      Locals:        13       0       0       0       0       0       0
+   139 ;;      Temps:          1       0       0       0       0       0       0
+   140 ;;      Totals:        14       0       0       0       0       0       0
+   141 ;;Total ram usage:       14 bytes
+   142 ;; Hardware stack levels required when called:    1
+   143 ;; This function calls:
+   144 ;;		Nothing
+   145 ;; This function is called by:
+   146 ;;		Startup code after reset
+   147 ;; This function uses a non-reentrant model
+   148 ;;
+   149                           
+   150                           	psect	text0
+   151  000012                     __ptext0:
+   152                           	opt callstack 0
+   153  000012                     _main:
+   154                           	opt callstack 30
+   155                           
+   156                           ;relogio.c: 24:     TRISD = 0x00;
+   157                           
+   158                           ;incstack = 0
+   159  000012  0E00               	movlw	0
+   160  000014  6E95               	movwf	3989,c	;volatile
+   161                           
+   162                           ;relogio.c: 25:     TRISB = 0x00;
+   163  000016  0E00               	movlw	0
+   164  000018  6E93               	movwf	3987,c	;volatile
+   165                           
+   166                           ;relogio.c: 27:     T0CON = 0x95;
+   167  00001A  0E95               	movlw	149
+   168  00001C  6ED5               	movwf	4053,c	;volatile
+   169                           
+   170                           ;relogio.c: 33:     INTCONbits.INT0IE = 1;
+   171  00001E  88F2               	bsf	4082,4,c	;volatile
+   172                           
+   173                           ;relogio.c: 34:     INTCONbits.GIE = 1;
+   174  000020  8EF2               	bsf	4082,7,c	;volatile
+   175                           
+   176                           ;relogio.c: 35:     INTCONbits.TMR0IE = 1;
+   177  000022  8AF2               	bsf	4082,5,c	;volatile
+   178                           
+   179                           ;relogio.c: 36:     TMR0H = 0x0B;
+   180  000024  0E0B               	movlw	11
+   181  000026  6ED7               	movwf	4055,c	;volatile
+   182                           
+   183                           ;relogio.c: 37:     TMR0L = 0xDC;
+   184  000028  0EDC               	movlw	220
+   185  00002A  6ED6               	movwf	4054,c	;volatile
+   186                           
+   187                           ;relogio.c: 40:     char numeros[10];;relogio.c: 41:     numeros[0]=0x03F;
+   188  00002C  0E3F               	movlw	63
+   189  00002E  6E02               	movwf	main@numeros,c
+   190                           
+   191                           ;relogio.c: 42:     numeros[1]=0x06;
+   192  000030  0E06               	movlw	6
+   193  000032  6E03               	movwf	main@numeros+1,c
+   194                           
+   195                           ;relogio.c: 43:     numeros[2]=0x5B;
+   196  000034  0E5B               	movlw	91
+   197  000036  6E04               	movwf	main@numeros+2,c
+   198                           
+   199                           ;relogio.c: 44:     numeros[3]=0x4F;
+   200  000038  0E4F               	movlw	79
+   201  00003A  6E05               	movwf	main@numeros+3,c
+   202                           
+   203                           ;relogio.c: 45:     numeros[4]=0x66;
+   204  00003C  0E66               	movlw	102
+   205  00003E  6E06               	movwf	main@numeros+4,c
+   206                           
+   207                           ;relogio.c: 46:     numeros[5]=0x6D;
+   208  000040  0E6D               	movlw	109
+   209  000042  6E07               	movwf	main@numeros+5,c
+   210                           
+   211                           ;relogio.c: 47:     numeros[6]=0x7D;
+   212  000044  0E7D               	movlw	125
+   213  000046  6E08               	movwf	main@numeros+6,c
+   214                           
+   215                           ;relogio.c: 48:     numeros[7]=0x07;
+   216  000048  0E07               	movlw	7
+   217  00004A  6E09               	movwf	main@numeros+7,c
+   218                           
+   219                           ;relogio.c: 49:     numeros[8]=0x7F;
+   220  00004C  0E7F               	movlw	127
+   221  00004E  6E0A               	movwf	main@numeros+8,c
+   222                           
+   223                           ;relogio.c: 50:     numeros[9]=0x6F;
+   224  000050  0E6F               	movlw	111
+   225  000052  6E0B               	movwf	main@numeros+9,c
+   226                           
+   227                           ;relogio.c: 51:     unsigned char sd = 0, mu = 0, md = 0;
+   228  000054  0E00               	movlw	0
+   229  000056  6E0C               	movwf	main@sd,c
+   230  000058  0E00               	movlw	0
+   231  00005A  6E0D               	movwf	main@mu,c
+   232  00005C  0E00               	movlw	0
+   233  00005E  6E0E               	movwf	main@md,c
+   234  000060                     l32:
+   235                           
+   236                           ;relogio.c: 56:        PORTB = 0b10000000;
+   237  000060  0E80               	movlw	128
+   238  000062  6E81               	movwf	3969,c	;volatile
+   239                           
+   240                           ;relogio.c: 57:        PORTD = numeros[su];
+   241  000064  0E02               	movlw	low main@numeros
+   242  000066  240F               	addwf	_su,w,c
+   243  000068  6ED9               	movwf	fsr2l,c
+   244  00006A  6ADA               	clrf	fsr2h,c
+   245  00006C  0E00               	movlw	high main@numeros
+   246  00006E  22DA               	addwfc	fsr2h,f,c
+   247  000070  50DF               	movf	indf2,w,c
+   248  000072  6E83               	movwf	3971,c	;volatile
+   249                           
+   250                           ;relogio.c: 58:        _delay((unsigned long)((5)*(16000000/4000.0)));
+   251  000074  0E1A               	movlw	26
+   252  000076  6E01               	movwf	??_main& (0+255),c
+   253  000078  0EF8               	movlw	248
+   254  00007A                     u67:
+   255  00007A  2EE8               	decfsz	wreg,f,c
+   256  00007C  D7FE               	bra	u67
+   257  00007E  2E01               	decfsz	??_main& (0+255),f,c
+   258  000080  D7FC               	bra	u67
+   259  000082  D000               	nop2	
+   260                           
+   261                           ;relogio.c: 61:        PORTB = 0b01000000;
+   262  000084  0E40               	movlw	64
+   263  000086  6E81               	movwf	3969,c	;volatile
+   264                           
+   265                           ;relogio.c: 62:        PORTD = numeros[sd];
+   266  000088  0E02               	movlw	low main@numeros
+   267  00008A  240C               	addwf	main@sd,w,c
+   268  00008C  6ED9               	movwf	fsr2l,c
+   269  00008E  6ADA               	clrf	fsr2h,c
+   270  000090  0E00               	movlw	high main@numeros
+   271  000092  22DA               	addwfc	fsr2h,f,c
+   272  000094  50DF               	movf	indf2,w,c
+   273  000096  6E83               	movwf	3971,c	;volatile
+   274                           
+   275                           ;relogio.c: 63:           _delay((unsigned long)((5)*(16000000/4000.0)));
+   276  000098  0E1A               	movlw	26
+   277  00009A  6E01               	movwf	??_main& (0+255),c
+   278  00009C  0EF8               	movlw	248
+   279  00009E                     u77:
+   280  00009E  2EE8               	decfsz	wreg,f,c
+   281  0000A0  D7FE               	bra	u77
+   282  0000A2  2E01               	decfsz	??_main& (0+255),f,c
+   283  0000A4  D7FC               	bra	u77
+   284  0000A6  D000               	nop2	
+   285                           
+   286                           ;relogio.c: 66:        PORTB = 0b00100000;
+   287  0000A8  0E20               	movlw	32
+   288  0000AA  6E81               	movwf	3969,c	;volatile
+   289                           
+   290                           ;relogio.c: 67:        PORTD = numeros[mu];
+   291  0000AC  0E02               	movlw	low main@numeros
+   292  0000AE  240D               	addwf	main@mu,w,c
+   293  0000B0  6ED9               	movwf	fsr2l,c
+   294  0000B2  6ADA               	clrf	fsr2h,c
+   295  0000B4  0E00               	movlw	high main@numeros
+   296  0000B6  22DA               	addwfc	fsr2h,f,c
+   297  0000B8  50DF               	movf	indf2,w,c
+   298  0000BA  6E83               	movwf	3971,c	;volatile
+   299                           
+   300                           ;relogio.c: 68:           if(su%2==0){
+   301  0000BC  A00F               	btfss	_su,0,c
+   302                           
+   303                           ;relogio.c: 69:        PORTDbits.RD7 = 1;
+   304  0000BE  8E83               	bsf	3971,7,c	;volatile
+   305                           
+   306                           ;relogio.c: 71:       _delay((unsigned long)((5)*(16000000/4000.0)));
+   307  0000C0  0E1A               	movlw	26
+   308  0000C2  6E01               	movwf	??_main& (0+255),c
+   309  0000C4  0EF8               	movlw	248
+   310  0000C6                     u87:
+   311  0000C6  2EE8               	decfsz	wreg,f,c
+   312  0000C8  D7FE               	bra	u87
+   313  0000CA  2E01               	decfsz	??_main& (0+255),f,c
+   314  0000CC  D7FC               	bra	u87
+   315  0000CE  D000               	nop2	
+   316                           
+   317                           ;relogio.c: 73:       PORTB = 0b00010000;
+   318  0000D0  0E10               	movlw	16
+   319  0000D2  6E81               	movwf	3969,c	;volatile
+   320                           
+   321                           ;relogio.c: 74:       PORTD = numeros[md];
+   322  0000D4  0E02               	movlw	low main@numeros
+   323  0000D6  240E               	addwf	main@md,w,c
+   324  0000D8  6ED9               	movwf	fsr2l,c
+   325  0000DA  6ADA               	clrf	fsr2h,c
+   326  0000DC  0E00               	movlw	high main@numeros
+   327  0000DE  22DA               	addwfc	fsr2h,f,c
+   328  0000E0  50DF               	movf	indf2,w,c
+   329  0000E2  6E83               	movwf	3971,c	;volatile
+   330                           
+   331                           ;relogio.c: 75:          _delay((unsigned long)((5)*(16000000/4000.0)));
+   332  0000E4  0E1A               	movlw	26
+   333  0000E6  6E01               	movwf	??_main& (0+255),c
+   334  0000E8  0EF8               	movlw	248
+   335  0000EA                     u97:
+   336  0000EA  2EE8               	decfsz	wreg,f,c
+   337  0000EC  D7FE               	bra	u97
+   338  0000EE  2E01               	decfsz	??_main& (0+255),f,c
+   339  0000F0  D7FC               	bra	u97
+   340  0000F2  D000               	nop2	
+   341                           
+   342                           ;relogio.c: 78:   if(su>=10){
+   343  0000F4  0E09               	movlw	9
+   344  0000F6  640F               	cpfsgt	_su,c
+   345  0000F8  D7B3               	goto	l32
+   346                           
+   347                           ;relogio.c: 79:      su = 0;
+   348  0000FA  0E00               	movlw	0
+   349  0000FC  6E0F               	movwf	_su,c
+   350                           
+   351                           ;relogio.c: 80:      sd++;
+   352  0000FE  2A0C               	incf	main@sd,f,c
+   353                           
+   354                           ;relogio.c: 82:     if(sd>=6){
+   355  000100  0E05               	movlw	5
+   356  000102  640C               	cpfsgt	main@sd,c
+   357  000104  D7AD               	goto	l32
+   358                           
+   359                           ;relogio.c: 83:     sd = 0;
+   360  000106  0E00               	movlw	0
+   361  000108  6E0C               	movwf	main@sd,c
+   362                           
+   363                           ;relogio.c: 84:     mu++;
+   364  00010A  2A0D               	incf	main@mu,f,c
+   365                           
+   366                           ;relogio.c: 86:    if(mu>=10){
+   367  00010C  0E09               	movlw	9
+   368  00010E  640D               	cpfsgt	main@mu,c
+   369  000110  D7A7               	goto	l32
+   370                           
+   371                           ;relogio.c: 87:    mu = 0;
+   372  000112  0E00               	movlw	0
+   373  000114  6E0D               	movwf	main@mu,c
+   374                           
+   375                           ;relogio.c: 88:    md++;
+   376  000116  2A0E               	incf	main@md,f,c
+   377                           
+   378                           ;relogio.c: 91:         if(md >= 6){
+   379  000118  0E05               	movlw	5
+   380  00011A  640E               	cpfsgt	main@md,c
+   381  00011C  D7A1               	goto	l32
+   382  00011E  D79E               	goto	L1
+   383  000120                     __end_of_main:
+   384                           	opt callstack 0
+   385                           
+   386 ;; *************** function _TrataInt *****************
+   387 ;; Defined at:
+   388 ;;		line 13 in file "relogio.c"
+   389 ;; Parameters:    Size  Location     Type
+   390 ;;		None
+   391 ;; Auto vars:     Size  Location     Type
+   392 ;;		None
+   393 ;; Return value:  Size  Location     Type
+   394 ;;                  1    wreg      void 
+   395 ;; Registers used:
+   396 ;;		wreg, status,2, status,0
+   397 ;; Tracked objects:
+   398 ;;		On entry : 0/0
+   399 ;;		On exit  : 0/0
+   400 ;;		Unchanged: 0/0
+   401 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   402 ;;      Params:         0       0       0       0       0       0       0
+   403 ;;      Locals:         0       0       0       0       0       0       0
+   404 ;;      Temps:          0       0       0       0       0       0       0
+   405 ;;      Totals:         0       0       0       0       0       0       0
+   406 ;;Total ram usage:        0 bytes
+   407 ;; Hardware stack levels used:    1
+   408 ;; This function calls:
+   409 ;;		Nothing
+   410 ;; This function is called by:
+   411 ;;		Interrupt level 2
+   412 ;; This function uses a non-reentrant model
+   413 ;;
+   414                           
+   415                           	psect	intcode
+   416  000008                     __pintcode:
+   417                           	opt callstack 0
+   418  000008                     _TrataInt:
+   419                           	opt callstack 30
+   420                           
+   421                           ;incstack = 0
+   422  000008  8210               	bsf	btemp,1,c	;set compiler interrupt flag (level 2)
+   423  00000A  ED90  F000         	call	int_func,f	;refresh shadow registers
+   424                           
+   425                           	psect	intcode_body
+   426  000120                     __pintcode_body:
+   427                           	opt callstack 30
+   428  000120                     int_func:
+   429                           	opt callstack 30
+   430  000120  0006               	pop		; remove dummy address from shadow register refresh
+   431                           
+   432                           ;relogio.c: 14:     su++;
+   433  000122  2A0F               	incf	_su,f,c
+   434                           
+   435                           ;relogio.c: 15:     TMR0H = 0x0B;
+   436  000124  0E0B               	movlw	11
+   437  000126  6ED7               	movwf	4055,c	;volatile
+   438                           
+   439                           ;relogio.c: 16:     TMR0L = 0xDC;
+   440  000128  0EDC               	movlw	220
+   441  00012A  6ED6               	movwf	4054,c	;volatile
+   442                           
+   443                           ;relogio.c: 17:     INTCONbits.TMR0IF = 0;
+   444  00012C  94F2               	bcf	4082,2,c	;volatile
+   445  00012E  9210               	bcf	btemp,1,c	;clear compiler interrupt flag (level 2)
+   446  000130  0011               	retfie		f
+   447  000132                     __end_of_TrataInt:
+   448                           	opt callstack 0
+   449  0000                     
+   450                           	psect	rparam
+   451  0000                     
+   452                           	psect	temp
+   453  000010                     btemp:
+   454                           	opt callstack 0
+   455  000010                     	ds	1
+   456  0000                     int$flags	set	btemp
+   457  0000                     wtemp8	set	btemp+1
+   458  0000                     ttemp5	set	btemp+1
+   459  0000                     ttemp6	set	btemp+4
+   460  0000                     ttemp7	set	btemp+8
+   461                           tosu	equ	0xFFF
+   462                           tosh	equ	0xFFE
+   463                           tosl	equ	0xFFD
+   464                           stkptr	equ	0xFFC
+   465                           pclatu	equ	0xFFB
+   466                           pclath	equ	0xFFA
+   467                           pcl	equ	0xFF9
+   468                           tblptru	equ	0xFF8
+   469                           tblptrh	equ	0xFF7
+   470                           tblptrl	equ	0xFF6
+   471                           tablat	equ	0xFF5
+   472                           prodh	equ	0xFF4
+   473                           prodl	equ	0xFF3
+   474                           indf0	equ	0xFEF
+   475                           postinc0	equ	0xFEE
+   476                           postdec0	equ	0xFED
+   477                           preinc0	equ	0xFEC
+   478                           plusw0	equ	0xFEB
+   479                           fsr0h	equ	0xFEA
+   480                           fsr0l	equ	0xFE9
+   481                           wreg	equ	0xFE8
+   482                           indf1	equ	0xFE7
+   483                           postinc1	equ	0xFE6
+   484                           postdec1	equ	0xFE5
+   485                           preinc1	equ	0xFE4
+   486                           plusw1	equ	0xFE3
+   487                           fsr1h	equ	0xFE2
+   488                           fsr1l	equ	0xFE1
+   489                           bsr	equ	0xFE0
+   490                           indf2	equ	0xFDF
+   491                           postinc2	equ	0xFDE
+   492                           postdec2	equ	0xFDD
+   493                           preinc2	equ	0xFDC
+   494                           plusw2	equ	0xFDB
+   495                           fsr2h	equ	0xFDA
+   496                           fsr2l	equ	0xFD9
+   497                           status	equ	0xFD8
+
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         1
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM          126     14      15
+    BANK0           128      0       0
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMRAM
+
+    None.
+
+Critical Paths under _TrataInt in COMRAM
+
+    None.
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _TrataInt in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _TrataInt in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _TrataInt in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _TrataInt in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _TrataInt in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Critical Paths under _TrataInt in BANK5
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                14    14      0     285
+                                              0 COMRAM    14    14      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 0
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (1) _TrataInt                                             0     0      0       0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 1
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+
+ _TrataInt (ROOT)
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             5FF      0       0      17        0.0%
+EEDATA             100      0       0       0        0.0%
+BITBANK5           100      0       0      16        0.0%
+BANK5              100      0       0      14        0.0%
+BITBANK4           100      0       0      12        0.0%
+BANK4              100      0       0      13        0.0%
+BITBANK3           100      0       0      10        0.0%
+BANK3              100      0       0      11        0.0%
+BITBANK2           100      0       0       8        0.0%
+BANK2              100      0       0       9        0.0%
+BITBANK1           100      0       0       6        0.0%
+BANK1              100      0       0       7        0.0%
+BITBANK0            80      0       0       4        0.0%
+BANK0               80      0       0       5        0.0%
+BITCOMRAM           7E      0       0       0        0.0%
+COMRAM              7E      E       F       1       11.9%
+BITSFR               0      0       0     200        0.0%
+SFR                  0      0       0     200        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0       F      15        0.0%
+DATA                 0      0       F       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V2.05 build -831301201 
+Symbol Table                                                                                   Mon Apr 15 10:40:39 2019
+
+                     l32 0060                       u67 007A                       u77 009E  
+                     u87 00C6                       u97 00EA                       _su 000F  
+                    wreg 000FE8                     _main 0012                     indf2 000FDF  
+                   fsr2l 000FD9                     btemp 0010              main@numeros 0002  
+                   start 000E             ___param_bank 000000                    ?_main 0001  
+                  _T0CON 000FD5                    _TMR0H 000FD7                    _TMR0L 000FD6  
+                  _PORTB 000F81                    _PORTD 000F83                    _TRISB 000F93  
+                  _TRISD 000F95                    ttemp5 0011                    ttemp6 0014  
+                  ttemp7 0018                    wtemp8 0011          __initialization 0132  
+           __end_of_main 0120                   ??_main 0001            __activetblptr 000000  
+       __end_of_TrataInt 0132                   main@md 000E                   main@sd 000C  
+                 main@mu 000D               __accesstop 0080  __end_of__initialization 0134  
+          ___rparam_used 000001           __pcstackCOMRAM 0001                ?_TrataInt 0001  
+                __Hparam 0000                  __Lparam 0000               ??_TrataInt 0001  
+                __pcinit 0132                  __ramtop 0600                  __ptext0 0012  
+         __pintcode_body 0120     end_of_initialization 0134                  int_func 0120  
+              _PORTDbits 000F83      start_initialization 0132        __size_of_TrataInt 012A  
+            __pbssCOMRAM 000F                __pintcode 0008                 __Hrparam 0000  
+               __Lrparam 0000                 _TrataInt 0008            __size_of_main 010E  
+               int$flags 0010               _INTCONbits 000FF2                 intlevel2 0000  
